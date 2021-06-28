@@ -1,0 +1,55 @@
+void search_name(int b_n)
+{
+    int s1,s2;
+    char s3[40];
+    FILE*file;
+    file=fopen("books.txt","r");
+    if (file==NULL){printf("your file not found");}
+    int i=0;
+    while(!feof(file))
+   {
+       fscanf(file,"%d %d ",&r[i].id,&r[i].quan);
+       fgets(r[i].name,40,file);
+       fscanf(file,"/n");
+       i++;
+   }
+    for (int x=0;x<b_n;x++)
+    {
+        for (int y = x + 1 ; y < b_n; y++)
+        {
+         if((strcmp(r[x].name,r[y].name))>0 && x+1 < b_n)
+           {
+               strcpy(s3,r[x].name);
+               strcpy(r[x].name,r[y].name);
+               strcpy(r[y].name,s3);
+
+               s1=r[x].id;
+               r[x].id=r[y].id;
+               r[y].id=s1;
+
+               s2=r[x].quan;
+               r[x].quan=r[y].quan;
+               r[y].quan=s2;
+           }
+        }
+
+    }
+    int low=0,high=b_n-1,mid;
+    char b_name [40];
+    printf("enter book name : ");
+    getchar();
+    gets(b_name);
+    while (low<=high)
+    {
+        mid=(low+high)/2;
+        if(strcmp(b_name,r[mid].name)==0)
+        {
+            printf("%d %d\n",r[mid].id,r[mid].quan);
+        }
+        else if (strcmp(b_name,r[mid].name)== -1)  high=mid-1;
+
+        else low=mid+1;
+    }
+    printf("your book not found\n");
+    fclose(file);
+}
